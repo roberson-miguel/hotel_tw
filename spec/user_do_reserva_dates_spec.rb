@@ -8,7 +8,7 @@ feature 'User filling dates starting and finish of reserva' do
 
     click_link "Nova Reserva"
 
-    select "Regular", from: "reserva_type_client"
+    select "Regular", from: "reserva_tipo_cliente_id"
     fill_in "reserva_date_starting", with: "16Mar2020(mon)"
     fill_in "reserva_date_exit", with: "18Mar2020(wed)"
 

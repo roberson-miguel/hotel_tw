@@ -1,0 +1,25 @@
+<% if @tabela_preco.errors.any? %>
+  <div class="alert alert-danger" role="alert">
+    <% @tabela_preco.errors.full_messages.each do |message| %>
+      <%= message %>
+    <% end %>
+  </div>
+<% end %>
+
+<%= form_for(tabela_preco) do |f| %>
+
+    <%= f.label :hotel_id %>
+    <%= f.collection_select(:hotel_id, @hoteis, :id, :nome) %><br>
+  
+    <%= f.label :tipo_cliente_id %>
+    <%= f.collection_select(:tipo_cliente_id, @tipo_clientes, :id, :type_client) %><br>
+
+     <%= f.label :periodo_id %>
+    <%= f.collection_select(:periodo_id, @periodos, :id, :periodo) %><br>
+  
+    <%= f.label :preco %>
+    <%= f.text_field :preco %><br>
+
+    <%= f.submit class:'btn btn-primary' %>
+  
+<% end %>

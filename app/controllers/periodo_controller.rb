@@ -1,0 +1,2 @@
+class PeriodoController < ApplicationController
+end

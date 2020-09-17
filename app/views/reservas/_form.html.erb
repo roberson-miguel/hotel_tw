@@ -17,8 +17,8 @@ Dias de Fim de semana: <%= @weekend_days %><br><br>
 
 <%= form_for(reserva) do |f| %>
   
-    <%= f.label :type_client %>
-    <%= f.select(:type_client, Reserva.type_clients.keys.map {|type| [type.titleize, type]}) %><br>
+    <%= f.label :tipo_cliente_id %>
+    <%= f.collection_select(:tipo_cliente_id, @tipo_clientes, :id, :type_client) %><br>
   
     <%= f.label :date_starting %>
     <%= f.text_field :date_starting %><br>

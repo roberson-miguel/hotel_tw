@@ -10,14 +10,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_16_190401) do
+ActiveRecord::Schema.define(version: 2020_09_17_163141) do
 
-  create_table "reservas", force: :cascade do |t|
-    t.integer "type_client"
-    t.string "date_starting"
-    t.string "date_exit"
+  create_table "hotels", force: :cascade do |t|
+    t.string "nome"
+    t.integer "classe"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "periodos", force: :cascade do |t|
+    t.string "periodo"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "reservas", force: :cascade do |t|
+    t.string "date_starting"
+    t.string "date_exit"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "tipo_cliente_id", null: false
+    t.index ["tipo_cliente_id"], name: "index_reservas_on_tipo_cliente_id"
+  end
+
+  create_table "tabela_precos", force: :cascade do |t|
+    t.integer "hotel_id", null: false
+    t.integer "tipo_cliente_id", null: false
+    t.integer "periodo_id", null: false
+    t.float "preco"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["hotel_id"], name: "index_tabela_precos_on_hotel_id"
+    t.index ["periodo_id"], name: "index_tabela_precos_on_periodo_id"
+    t.index ["tipo_cliente_id"], name: "index_tabela_precos_on_tipo_cliente_id"
+  end
+
+  create_table "tipo_clientes", force: :cascade do |t|
+    t.string "type_client"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "reservas", "tipo_clientes"
+  add_foreign_key "tabela_precos", "hotels"
+  add_foreign_key "tabela_precos", "periodos"
+  add_foreign_key "tabela_precos", "tipo_clientes"
 end
