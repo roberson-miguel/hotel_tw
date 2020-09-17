@@ -1,3 +1,3 @@
 class Reserva < ApplicationRecord
-  has_many :tipos_clientes
+  belongs_to :tipo_cliente
 end

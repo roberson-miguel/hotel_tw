@@ -2,31 +2,32 @@ class ReservasController < ApplicationController
   require 'date'
   require 'time'
 
+  before_action :set_find, only: [:show, :edit, :update, :destroy]
+
   def index
     @reservas = Reserva.all
   end
 
   def show
-    @reserva = Reserva.find(params[:id])
+    @reservas = Reserva.all
+    @tipo_clientes = TipoCliente.all
   end
 
   def new
     @reserva = Reserva.new
     @tipo_clientes = TipoCliente.all
-    @periodos = Periodo.all
-    
-    data1 = "16Mar2020(mon)"
-    data2 = "20Apr2020(mon)"
-    @formatted_data1 = Date.parse(data1).strftime('%d %B %Y %A')
-    @formatted_data2 = Date.parse(data2).strftime('%d %B %Y %A')
+  end
 
-    @time_data1 = Time.parse(data1)
-    @time_data2 = Time.parse(data2)
-
-    @differ = (((@time_data2 - @time_data1)/3600)/24).to_s
-    @weekdays = ((Date.parse(data1))..(Date.parse(data2) - 1) ).select {|d| (1..5).include?(d.wday) }.size
-    @weekend_days = (@differ.to_i - @weekdays) 
-
+  def create
+      @reserva = Reserva.new(reserva_params)
+      @tipo_clientes = TipoCliente.all
+    if @reserva.save
+      flash[:notice] = 'Reserva efetuada com sucesso!'
+      redirect_to @reserva
+    else
+      flash[:alert] = 'Erro'
+      render :new
+    end
   end
 
  
@@ -37,6 +38,30 @@ class ReservasController < ApplicationController
     @reservas = Rerserva.all
   end
 end
+
+
+private
+
+def reserva_params
+  params.require(:reserva).permit(:tipo_cliente_id, :date_starting, :date_exit)
+end
+
+def set_find
+   @reserva = Reserva.find(params[:id])
+end
+
+
+# data1 = "16Mar2020(mon)"
+# data2 = "20Apr2020(mon)"
+# @formatted_data1 = Date.parse(data1).strftime('%d %B %Y %A')
+# @formatted_data2 = Date.parse(data2).strftime('%d %B %Y %A')
+
+# @time_data1 = Time.parse(data1)
+# @time_data2 = Time.parse(data2)
+
+# @differ = (((@time_data2 - @time_data1)/3600)/24).to_s
+# @weekdays = ((Date.parse(data1))..(Date.parse(data2) - 1) ).select {|d| (1..5).include?(d.wday) }.size
+# @weekend_days = (@differ.to_i - @weekdays) 
 
 
 #Como usar as data no controller

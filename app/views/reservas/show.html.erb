@@ -1,5 +1,13 @@
-<h1>Reserva#show</h1>
-<p>Find me in app/views/reserva/show.html.erb</p>
+<h1>Detalhes da Reserva</h1>
+   
+Tipo do Cliente: <%= @reserva.tipo_cliente.type_client %> <br> 
+Data de Entrada: <%= @reserva.date_starting %><br>
+Data de Saída: <%= @reserva.date_exit %><br>
 
-<br><br><br>   
-    <%= link_to 'Voltar', reservas_path %>
+<%# <%= link_to 'Editar', edit_reserva_path(@reserva) %>
+<%# <%= link_to 'Deletar', reserva_path(@reserva), method: :delete, data: { confirm: "Confirma exclusão da Reserva: #{@reserva.id}?" } %> 
+<%= link_to 'Voltar', reservas_path %>
+
+    
+
+

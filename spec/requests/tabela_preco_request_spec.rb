@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe "TabelaPrecos", type: :request do
+# RSpec.describe "TabelaPrecos", type: :request do
 
-end
+# end
