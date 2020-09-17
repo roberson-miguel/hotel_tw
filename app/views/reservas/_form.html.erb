@@ -1,0 +1,25 @@
+<% if @reserva.errors.any? %>
+  <div class="alert alert-danger" role="alert">
+    <% @reserva.errors.full_messages.each do |message| %>
+      <%= message %>
+    <% end %>
+  </div>
+<% end %>
+
+<%= @formatted_date%>
+
+
+<%= form_for(reserva) do |f| %>
+  
+    <%= f.label :type_client %>
+    <%= f.select(:type_client, Reserva.type_clients.keys.map {|type| [type.titleize, type]}) %><br>
+  
+    <%= f.label :date_starting %>
+    <%= f.text_field :date_starting %><br>
+  
+    <%= f.label :date_exit %>
+    <%= f.text_field :date_exit %><br>
+
+    <%= f.submit class:'btn btn-primary' %>
+  
+<% end %>
