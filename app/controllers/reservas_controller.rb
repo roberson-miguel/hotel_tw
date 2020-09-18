@@ -11,6 +11,19 @@ class ReservasController < ApplicationController
   def show
     @reservas = Reserva.all
     @tipo_clientes = TipoCliente.all
+
+    # data1 = "16Mar2020(mon)"
+    # data2 = "20Apr2020(mon)"
+    @formatted_data1 = Date.parse(@reserva.date_starting).strftime('%d %B %Y %A')
+    @formatted_data2 = Date.parse(@reserva.date_exit).strftime('%d %B %Y %A')
+
+    @time_data1 = Time.parse(@reserva.date_starting)
+    @time_data2 = Time.parse(@reserva.date_exit)
+
+    @differ = (((@time_data2 - @time_data1)/3600)/24).to_s
+    @weekdays = ((Date.parse(@reserva.date_starting))..(Date.parse(@reserva.date_exit) - 1) ).select {|d| (1..5).include?(d.wday) }.size
+    @weekend_days = (@differ.to_i - @weekdays) 
+
   end
 
   def new
