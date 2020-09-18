@@ -3,15 +3,17 @@ require "rails_helper"
 feature 'User filling dates starting and finish of reserva' do
   scenario 'User filling date startin and date finish' do
 
+    TipoCliente.create(type_client: "Regular")
+
     visit root_path
     click_link "Reservas"
 
     click_link "Nova Reserva"
 
    #fill_in("reserva_tipo_cliente_id", with: 'Regular')
-    find_field("reserva_tipo_cliente_id").set("Regular")
-    find_field("reserva_date_starting").set("16Mar2020(mon)")
-    find_field("reserva_date_exit").set("18Mar2020(wed)")
+    select "Regular", from: "reserva_tipo_cliente_id"
+    fill_in "reserva_date_starting", with: "16Mar2020(mon)"
+    fill_in "reserva_date_exit", with: "18Mar2020(wed)"
 
     click_button
 
