@@ -49,13 +49,24 @@ class ReservasController < ApplicationController
     end
   end
 
+  def edit
+    @reservas = Reserva.all
+    @tipo_clientes = TipoCliente.all
+  end
  
   def update
+    if @reserva.update(reserva_params)
+      redirect_to @reserva
+    else
+      render :edit
+    end
   end
-  
-  def edit
-    @reservas = Rerserva.all
+
+  def destroy
+    @reserva.destroy
+    redirect_to @reserva, notice: "Reserva excluida com sucesso!"
   end
+
 end
 
 

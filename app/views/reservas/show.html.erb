@@ -9,8 +9,8 @@ Total de dias reservados: <%= @differ %><br>
 Total de dias de semana: <%=  @weekdays %><br>
 Total dias de Fim de semana: <%= @weekend_days %><br>
 </h5>
-<%# <%= link_to 'Editar', edit_reserva_path(@reserva) %>
-<%# <%= link_to 'Deletar', reserva_path(@reserva), method: :delete, data: { confirm: "Confirma exclusão da Reserva: #{@reserva.id}?" } %> 
+<%= link_to 'Editar', edit_reserva_path(@reserva) %>
+<%= link_to 'Deletar', reserva_path(@reserva), method: :delete, data: { confirm: "Confirma exclusão da Reserva: #{@reserva.id}?" } %> 
 <%= link_to 'Voltar', reservas_path %>
 
     
