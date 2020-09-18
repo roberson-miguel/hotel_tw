@@ -11,20 +11,27 @@ class ReservasController < ApplicationController
   def show
     @reservas = Reserva.all
     @tipo_clientes = TipoCliente.all
-
-    # data1 = "16Mar2020(mon)"
-    # data2 = "20Apr2020(mon)"
-    @formatted_data1 = Date.parse(@reserva.date_starting).strftime('%d %B %Y %A')
-    @formatted_data2 = Date.parse(@reserva.date_exit).strftime('%d %B %Y %A')
-
-    @time_data1 = Time.parse(@reserva.date_starting)
-    @time_data2 = Time.parse(@reserva.date_exit)
-
-    @differ = (((@time_data2 - @time_data1)/3600)/24).to_s
-    @weekdays = ((Date.parse(@reserva.date_starting))..(Date.parse(@reserva.date_exit) - 1) ).select {|d| (1..5).include?(d.wday) }.size
-    @weekend_days = (@differ.to_i - @weekdays) 
+  
+    @differ = calcula_dias_corridos(@reserva.date_starting, @reserva.date_exit)
+    @weekdays = calcula_dias_semana(@reserva.date_starting, @reserva.date_exit)
+    @weekend_days = calcula_dias_fim_de_semana(@differ, @weekdays)
 
   end
+
+  def calcula_dias_corridos(date_starting, date_exit)
+    @time_date_starting = Time.parse(date_starting)
+    @time_date_exit = Time.parse(date_exit)
+    (((@time_date_exit - @time_date_starting)/3600)/24).to_s
+  end
+
+  def calcula_dias_semana(date_starting, date_exit)
+    ((Date.parse(date_starting))..(Date.parse(date_exit)) ).select {|d| (1..5).include?(d.wday) }.size
+  end
+
+  def calcula_dias_fim_de_semana(differ, weekdays)
+    @weekend_days = (@differ.to_i - @weekdays) 
+  end
+  
 
   def new
     @reserva = Reserva.new
