@@ -15,4 +15,33 @@ Total dias de Fim de semana: <%= @weekend_days %><br>
 
     
 
+<% @totalReserva = 0
+@tabela_preco_total = [ ] 
+%>
+
+<% @tabela_precos.each do |item| %>
+  <%= [item[:hotel_id]] %> 
+<% end %>
+
+
+      if item[:tipo_cliente_id] == 1 #Regular
+          if @weekdays > 0 || @weekend_days > 0 
+            @tabela_preco_total << [item[:hotel_id.hotel.nome]]
+            @tabela_preco_total << [@totalReserva + (item[:periodo == 1] * @weekdays ) + (item[:periodo == 1] * @weekend_days)]
+          else
+            alert "Sem dados Tipo Regular"
+          end
+      end
+
+      if item[:tipo_cliente_id] == 2 #Fidelidade 
+          if @weekdays > 0 || @weekend_days > 0  
+            @tabela_preco_total << [:hotel_id.hotel.nome]
+            @tabela_preco_total << [@totalReserva + (item[:periodo == 2] * @weekdays ) + (item[:periodo == 2] * @weekend_days)]
+          else
+              alert "Sem dados Tipo Fidelidade"
+          end
+      end
+end%>
+#
+
 

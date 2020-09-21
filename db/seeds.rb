@@ -15,3 +15,7 @@ periodo2 = Periodo.create(periodo: "Fim de semana")
 Hotel1 = Hotel.create(nome: "Parque das flores", classe: 3)
 Hotel2 = Hotel.create(nome: "Jardim Botânico", classe: 4)
 Hotel3 = Hotel.create(nome: "Mar Atlântico", classe: 5)
+
+TabelaPreco1 = 
+TabelaPreco2 = 
+TabelaPreco3 = 

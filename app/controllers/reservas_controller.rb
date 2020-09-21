@@ -9,6 +9,7 @@ class ReservasController < ApplicationController
   end
 
   def show
+    @tabela_precos = TabelaPreco.all
     @reservas = Reserva.all
     @tipo_clientes = TipoCliente.all
   

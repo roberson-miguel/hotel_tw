@@ -1,0 +1,13 @@
+<h1>Detalhes do Preco Incluso na Tadela</h1>
+   
+Hotel: <%= @tabela_preco.hotel.nome %> <br> 
+Tipo de Cliente: <%= @tabela_preco.tipo_cliente.type_client %><br>
+Periodo: <%= @tabela_preco.periodo.periodo %><br>
+Preço: <%= @tabela_preco.preco %><br>
+
+
+<%= link_to 'Editar', edit_tabela_preco_path(@tabela_preco) %>
+<%= link_to 'Deletar', tabela_preco_path(@tabela_preco), method: :delete, data: { confirm: "Confirma exclusão do Preço dna Tabela #{@tabela_preco.id}?" } %> 
+<%= link_to 'Voltar', tabela_precos_path %>
+
+  

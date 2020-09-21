@@ -1,8 +1,35 @@
 <h1>Hotel TW - Reservas Online</h1>
 <p>Tabela de Preços</p>
 
+<%if @tabela_precos.present? %>
+	  <p>Exibindo Preços na Tabela</p>
+	  <!-- table width="100%" -->
+		<table class="table table-hover">
+	    <tr>
+	      <td scope="col">Hotel:</td>
+	      <td scope="col">Tipo de Cliente: </td>
+	      <td scope="col">Periodo:</td>
+        <td scope="col">Preço:</td>
+	    </tr>
+	    <%@tabela_precos.each do |tabela_preco|%>
+	    <tr>
+	      <td><%=tabela_preco.hotel.nome %></td>
+	      <td><%=tabela_preco.tipo_cliente.type_client%></td>
+	      <td><%=tabela_preco.periodo.periodo%></td>
+        <td><%=tabela_preco.preco %></td>
+	      <td>
+	        <%= link_to "Editar", edit_tabela_preco_path(tabela_preco[:id]) %>  
+	        <%= link_to "Deletar", tabela_preco_path(tabela_preco[:id]), :method => :delete %> 
+	      </td>
+	    </tr>
+	   <%end%>
+	  </table>
+	<%else%>
+	  <p>Não existem Preços cadastrados an tabela.</p>
+	<%end%>
+
 <ul class="nav flex-column">
-  <li><%= link_to "Incluir Novo Preço para Hotel", new_tabela_preco_path %></li>
+  <li><%= link_to "Incluir Preço na Tabela", new_tabela_preco_path %></li>
 </ul>
 
 <br><br><br>   

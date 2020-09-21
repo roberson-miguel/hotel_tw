@@ -1,4 +1,5 @@
 <h1>Hotel TW - Reservas Online</h1>
+<p>Reservas Cadastradas</p>
 
 <%if @reservas.present? %>
 	  <p>Exibindo Todas Reservas Realizadas</p>
@@ -15,7 +16,7 @@
 	      <td><%=reserva.date_starting%></td>
 	      <td><%=reserva.date_exit%></td>
 	      <td>
-	        <%= link_to "Editar", edit_reserva_path(reserva[:id]) %> | 
+	        <%= link_to "Editar", edit_reserva_path(reserva[:id]) %> 
 	        <%= link_to "Deletar", reserva_path(reserva[:id]), :method => :delete %>
 	      </td>
 	    </tr>
