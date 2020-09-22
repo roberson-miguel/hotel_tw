@@ -8,40 +8,30 @@ Data de Saída: <%= @reserva.date_exit %><br>
 Total de dias reservados: <%= @differ %><br>
 Total de dias de semana: <%=  @weekdays %><br>
 Total dias de Fim de semana: <%= @weekend_days %><br>
+
 </h5>
 <%= link_to 'Editar', edit_reserva_path(@reserva) %>
 <%= link_to 'Deletar', reserva_path(@reserva), method: :delete, data: { confirm: "Confirma exclusão da Reserva: #{@reserva.id}?" } %> 
 <%= link_to 'Voltar', reservas_path %>
 
     
-
-<% @totalReserva = 0
-@tabela_preco_total = [ ] 
-%>
+<br>
 
 <% @tabela_precos.each do |item| %>
-  <%= [item[:hotel_id]] %> 
+  <%= item.hotel.nome%> <br>
+  <%= item.tipo_cliente.type_client%> <br>
+  <%= item.periodo.periodo%> <br>
+  <%= item.preco%> <br>
+  
 <% end %>
 
+<br>
+<%= @tabela_preco_total %><br>
 
-      if item[:tipo_cliente_id] == 1 #Regular
-          if @weekdays > 0 || @weekend_days > 0 
-            @tabela_preco_total << [item[:hotel_id.hotel.nome]]
-            @tabela_preco_total << [@totalReserva + (item[:periodo == 1] * @weekdays ) + (item[:periodo == 1] * @weekend_days)]
-          else
-            alert "Sem dados Tipo Regular"
-          end
-      end
 
-      if item[:tipo_cliente_id] == 2 #Fidelidade 
-          if @weekdays > 0 || @weekend_days > 0  
-            @tabela_preco_total << [:hotel_id.hotel.nome]
-            @tabela_preco_total << [@totalReserva + (item[:periodo == 2] * @weekdays ) + (item[:periodo == 2] * @weekend_days)]
-          else
-              alert "Sem dados Tipo Fidelidade"
-          end
-      end
-end%>
-#
+
+
+
+
 
 

@@ -17,6 +17,21 @@ class ReservasController < ApplicationController
     @weekdays = calcula_dias_semana(@reserva.date_starting, @reserva.date_exit)
     @weekend_days = calcula_dias_fim_de_semana(@differ, @weekdays)
 
+
+    @totalReserva = 0
+    @tabela_preco_total = []
+    @tabela_precos.each do |tabela_preco|
+      if tabela_preco.tipo_cliente.type_client == @reserva.tipo_cliente.type_client
+        if @weekdays > 0 || @weekend_days > 0 
+          @tabela_preco_total << [tabela_preco.hotel.nome, @totalReserva + (tabela_preco.preco * @weekdays ) + (tabela_preco.preco * @weekend_days)]
+          #@tabela_preco_total << [@totalReserva + (tabela_preco.preco * @weekdays ) + (tabela_preco.preco * @weekend_days)]
+        end
+      # else
+      #     @tabela_preco_total << "Sem dados Tipo #{@reserva.tipo_cliente.type_client}"
+      #     break
+      end
+    end
+
   end
 
   def calcula_dias_corridos(date_starting, date_exit)

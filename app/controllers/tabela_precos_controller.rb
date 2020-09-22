@@ -11,11 +11,10 @@ class TabelaPrecosController < ApplicationController
 
   def show
     @tabela_precos = TabelaPreco.all
-    @reservas = Reserva.all
+    @hoteis = Hotel.all
     @tipo_clientes = TipoCliente.all
-    
+    @periodos = Periodo.all
   end
-
 
   def create
     @tabela_preco = TabelaPreco.new(tabela_preco_params)
