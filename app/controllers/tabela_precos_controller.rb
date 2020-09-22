@@ -10,6 +10,7 @@ class TabelaPrecosController < ApplicationController
   end
 
   def show
+    @reserva = Reserva.find(params[:id])
     @tabela_precos = TabelaPreco.all
     @hoteis = Hotel.all
     @tipo_clientes = TipoCliente.all

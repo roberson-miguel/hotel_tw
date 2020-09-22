@@ -6,6 +6,7 @@ class ReservasController < ApplicationController
 
   def index
     @reservas = Reserva.all
+    @tipo_clientes = TipoCliente.all
   end
 
   def show
@@ -15,7 +16,7 @@ class ReservasController < ApplicationController
   
     @differ = calcula_dias_corridos(@reserva.date_starting, @reserva.date_exit)
     @weekdays = calcula_dias_semana(@reserva.date_starting, @reserva.date_exit)
-    @weekend_days = calcula_dias_fim_de_semana(@differ, @weekdays)
+    @weekend_days = (@differ.to_i - @weekdays)
 
 
     @totalReserva = 0
@@ -37,15 +38,15 @@ class ReservasController < ApplicationController
   def calcula_dias_corridos(date_starting, date_exit)
     @time_date_starting = Time.parse(date_starting)
     @time_date_exit = Time.parse(date_exit)
-    (((@time_date_exit - @time_date_starting)/3600)/24).to_s
+    (((@time_date_exit - @time_date_starting).round / 3600 )/24).to_s
   end
 
   def calcula_dias_semana(date_starting, date_exit)
-    ((Date.parse(date_starting))..(Date.parse(date_exit)) ).select {|d| (1..5).include?(d.wday) }.size
+   (((Date.parse(date_starting))..(Date.parse(date_exit)) ).select {|d| (1..5).include?(d.wday) }.size - 1)
   end
 
   def calcula_dias_fim_de_semana(differ, weekdays)
-    (@differ.to_i - @weekdays) 
+    (@differ.to_i - @weekdays.to_i) 
   end
 
   def new
