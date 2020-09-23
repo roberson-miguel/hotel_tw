@@ -20,7 +20,7 @@ class ReservasController < ApplicationController
 
 
       @totalReserva = 0
-      # @tabela_preco_total = []
+      @tabela_preco_total = []
       @tabela_preco_semana = []
       @tabela_preco_fds = []
 
@@ -39,30 +39,37 @@ class ReservasController < ApplicationController
 
             @tabela_precos.each do |tabela_preco|
               if tabela_preco.tipo_cliente.type_client == @reserva.tipo_cliente.type_client
-                if @weekdays >= 1 && tabela_preco.periodo.periodo == "Semana"
+                if @weekdays > 0 && tabela_preco.periodo.periodo == "Semana"
                   @tabela_preco_semana << {nome: tabela_preco.hotel.nome, 
                                           periodo: tabela_preco.periodo.periodo, 
                                           tipo_cliente: tabela_preco.tipo_cliente.type_client,
-                                          total_semana: (@weekdays * tabela_preco.preco)}
+                                          total: (@weekdays * tabela_preco.preco)}
                                          #total_fim_de_semana: (@weekend_days * tabela_preco.preco)}
                                          # total: (@totalReserva + (@weekdays * tabela_preco.preco)+(@weekend_days * tabela_preco.preco))}
-                end
+                  end
               end
             end
 
             @tabela_precos.each do |tabela_preco|
               if tabela_preco.tipo_cliente.type_client == @reserva.tipo_cliente.type_client
-                if @weekend_days >= 1 && tabela_preco.periodo.periodo == "Fim de semana"
+                if @weekend_days > 0 && tabela_preco.periodo.periodo == "Fim de semana"
                   @tabela_preco_fds << {nome: tabela_preco.hotel.nome, 
                                           periodo: tabela_preco.periodo.periodo, 
                                           tipo_cliente: tabela_preco.tipo_cliente.type_client,
-                                          total_fds: (@weekend_days * tabela_preco.preco)}
+                                          total: (@weekend_days * tabela_preco.preco)}
                                          #total_fim_de_semana: (@weekend_days * tabela_preco.preco)}
                                          # total: (@totalReserva + (@weekdays * tabela_preco.preco)+(@weekend_days * tabela_preco.preco))}
                 end
               end
             end
 
+            @tabela_preco_semana.each do |tab1|
+              @tabela_preco_fds.each do |tab2|
+                if tab1[:nome] == tab2[:nome]
+                  @tabela_preco_total << {nome: tab2[:nome], total: (tab1[:total]+tab2[:total])}
+                end
+              end
+            end
 
     end
 
