@@ -25,7 +25,7 @@ Total dias de Fim de semana: <%= @weekend_days %><br>
 <%# <% end %>
 
 <br>
-<%= @tabela_preco_total %><br> <br>
+<%= @tabela_preco_total.sort_by{|menor_preco| menor_preco[:total]}.first %><br> <br>
 
 Semana: <br>
 <%= @tabela_preco_semana %><br> <br>
