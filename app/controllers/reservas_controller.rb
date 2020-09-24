@@ -24,29 +24,15 @@ class ReservasController < ApplicationController
       @tabela_preco_semana = []
       @tabela_preco_fds = []
 
-            # @tabela_precos.each do |tabela_preco|
-            #   if tabela_preco.tipo_cliente.type_client == @reserva.tipo_cliente.type_client
-            #     if @weekdays >= 1 || @weekend_days >=1 
-            #       @tabela_preco_total << {nome: tabela_preco.hotel.nome, 
-            #                               periodo: tabela_preco.periodo.periodo, 
-            #                               tipo_cliente: tabela_preco.tipo_cliente.type_client,
-            #                               total_semana: (@weekdays * tabela_preco.preco),
-            #                               total_fim_de_semana: (@weekend_days * tabela_preco.preco)}
-            #                              # total: (@totalReserva + (@weekdays * tabela_preco.preco)+(@weekend_days * tabela_preco.preco))}
-            #     end
-            #   end
-            # end
-
             @tabela_precos.each do |tabela_preco|
               if tabela_preco.tipo_cliente.type_client == @reserva.tipo_cliente.type_client
                 if @weekdays > 0 && tabela_preco.periodo.periodo == "Semana"
-                  @tabela_preco_semana << {nome: tabela_preco.hotel.nome, 
+                  @tabela_preco_semana << {nome: tabela_preco.hotel.nome,
+                                          classe: tabela_preco.hotel.classe,
                                           periodo: tabela_preco.periodo.periodo, 
                                           tipo_cliente: tabela_preco.tipo_cliente.type_client,
-                                          total: (@weekdays * tabela_preco.preco)}
-                                         #total_fim_de_semana: (@weekend_days * tabela_preco.preco)}
-                                         # total: (@totalReserva + (@weekdays * tabela_preco.preco)+(@weekend_days * tabela_preco.preco))}
-                  end
+                                          total: (@weekdays * tabela_preco.preco)}                                                       
+                end
               end
             end
 
@@ -54,22 +40,35 @@ class ReservasController < ApplicationController
               if tabela_preco.tipo_cliente.type_client == @reserva.tipo_cliente.type_client
                 if @weekend_days > 0 && tabela_preco.periodo.periodo == "Fim de semana"
                   @tabela_preco_fds << {nome: tabela_preco.hotel.nome, 
-                                          periodo: tabela_preco.periodo.periodo, 
+                                          periodo: tabela_preco.periodo.periodo,
+                                          classe: tabela_preco.hotel.classe, 
                                           tipo_cliente: tabela_preco.tipo_cliente.type_client,
                                           total: (@weekend_days * tabela_preco.preco)}
-                                         #total_fim_de_semana: (@weekend_days * tabela_preco.preco)}
-                                         # total: (@totalReserva + (@weekdays * tabela_preco.preco)+(@weekend_days * tabela_preco.preco))}
                 end
               end
             end
 
-            @tabela_preco_semana.each do |tab1|
-              @tabela_preco_fds.each do |tab2|
-                if tab1[:nome] == tab2[:nome]
-                  @tabela_preco_total << {nome: tab2[:nome], total: (tab1[:total]+tab2[:total])}
+            #Falta validar empate de valores pelo criterio de classe do hotel
+          if @weekend_days > 0 && @weekdays > 0 
+              @tabela_preco_semana.each do |tab1|
+                @tabela_preco_fds.each do |tab2|
+                  if tab1[:nome] == tab2[:nome]
+                    @tabela_preco_total << {nome: tab2[:nome], classe: tab2[:classe], total: (tab1[:total]+tab2[:total])}
+                  end
                 end
               end
-            end
+            elsif @weekdays > 0
+              @tabela_preco_semana.each do |tab1| 
+                @tabela_preco_total << {nome: tab1[:nome], classe: tab1[:classe], total: (tab1[:total])}   
+              end
+            elsif @weekend_days > 0
+              @tabela_preco_fds.each do |tab2| 
+                @tabela_preco_total << {nome: tab2[:nome], classe: tab2[:classe], total: (tab2[:total])}   
+              end
+            else
+              @tabela_preco_total << "Sem dados pra processar"
+          end
+
 
     end
 
